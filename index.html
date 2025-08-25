@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Horario Semanal</title>
+    <title>Dandel</title>
     <!-- Importar fuente Montserrat desde Google Fonts para un estilo moderno -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
   </head>
   <body>
     <header>
-      <h1>Mi Horario Semanal</h1>
+      <h1>Dandel</h1>
       <!-- Menú de navegación horizontal -->
       <nav id="menu">
         <ul>
@@ -30,6 +30,26 @@
         <h2>Horario de Lunes a Domingo</h2>
         <!-- Tabla de horario -->
         <div id="horario-container"></div>
+        <!-- Modal para agregar o editar materia en el horario -->
+        <div id="schedule-modal" class="modal hidden" role="dialog" aria-modal="true">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3>Agregar al horario</h3>
+              <button id="close-schedule-modal" class="modal-close" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+              <label style="display:block; margin-bottom:0.5rem;">
+                Nombre:
+                <input type="text" id="schedule-event-name" placeholder="Nombre de la materia" />
+              </label>
+              <label style="display:block; margin-bottom:0.5rem;">
+                Color:
+                <input type="color" id="schedule-event-color" value="#6366f1" />
+              </label>
+              <button id="schedule-save">Guardar</button>
+            </div>
+          </div>
+        </div>
       </section>
       <!-- Secciones adicionales como marcadores de posición -->
       <!-- Sección 2: Materias -->

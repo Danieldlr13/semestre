@@ -22,6 +22,71 @@ document.addEventListener("DOMContentLoaded", () => {
     "18:00 - 20:00",
   ];
 
+  // ====================
+  // Gestión de almacenamiento y modal del horario
+  // Se utiliza localStorage para persistir las materias asignadas a cada celda del horario.
+  let scheduleData;
+  try {
+    scheduleData = JSON.parse(localStorage.getItem("scheduleData") || "{}");
+  } catch (e) {
+    scheduleData = {};
+  }
+  function saveScheduleData() {
+    localStorage.setItem("scheduleData", JSON.stringify(scheduleData));
+  }
+  function loadScheduleData() {
+    const cells = horarioContainer.querySelectorAll("td.selectable");
+    cells.forEach((td) => {
+      const key = `d${td.dataset.day}_s${td.dataset.slot}`;
+      const ev = scheduleData[key];
+      if (ev) {
+        const eventDiv = document.createElement("div");
+        eventDiv.classList.add("evento");
+        eventDiv.style.backgroundColor = ev.color;
+        eventDiv.textContent = ev.title;
+        td.innerHTML = "";
+        td.appendChild(eventDiv);
+      }
+    });
+  }
+
+  // Referencias al modal del horario
+  const scheduleModal = document.getElementById("schedule-modal");
+  const scheduleNameInput = document.getElementById("schedule-event-name");
+  const scheduleColorInput = document.getElementById("schedule-event-color");
+  const scheduleSaveBtn = document.getElementById("schedule-save");
+  const scheduleCloseBtn = document.getElementById("close-schedule-modal");
+  let currentScheduleCell = null;
+
+  if (scheduleSaveBtn) {
+    scheduleSaveBtn.addEventListener("click", () => {
+      const name = scheduleNameInput.value.trim();
+      if (!name || !currentScheduleCell) return;
+      const color = scheduleColorInput.value;
+      // Crear elemento del evento
+      const eventDiv = document.createElement("div");
+      eventDiv.classList.add("evento");
+      eventDiv.style.backgroundColor = color;
+      eventDiv.textContent = name;
+      // Limpiar celda y agregar evento
+      currentScheduleCell.innerHTML = "";
+      currentScheduleCell.appendChild(eventDiv);
+      // Guardar en localStorage
+      const day = currentScheduleCell.dataset.day;
+      const slot = currentScheduleCell.dataset.slot;
+      const key = `d${day}_s${slot}`;
+      scheduleData[key] = { title: name, color: color };
+      saveScheduleData();
+      // Cerrar modal
+      scheduleModal.classList.add("hidden");
+    });
+  }
+  if (scheduleCloseBtn) {
+    scheduleCloseBtn.addEventListener("click", () => {
+      scheduleModal.classList.add("hidden");
+    });
+  }
+
   // Crear la tabla
   const tabla = document.createElement("table");
   tabla.classList.add("horario");
@@ -44,48 +109,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Crear cuerpo de la tabla
   const tbody = document.createElement("tbody");
-  franjas.forEach((franja) => {
+  franjas.forEach((franja, rowIndex) => {
     const fila = document.createElement("tr");
     // Celda de la franja horaria
     const celdaHora = document.createElement("th");
     celdaHora.textContent = franja;
     fila.appendChild(celdaHora);
     // Crear las celdas para cada día
-    dias.forEach(() => {
+    dias.forEach((dia, colIndex) => {
       const td = document.createElement("td");
       td.classList.add("selectable");
-      // Manejar clic para agregar o editar evento
+      // Asignar índices para recuperar del almacenamiento
+      td.dataset.day = colIndex;
+      td.dataset.slot = rowIndex;
+      // Manejar clic para abrir modal y agregar/editar evento
       td.addEventListener("click", () => {
-        // Solicitar nombre del evento
-        let nombre = prompt(
-          "Ingrese el nombre del evento (dejar vacío para cancelar):"
-        );
-        // Si el usuario canceló o no ingresó nombre, no hacer nada
-        if (nombre === null || nombre.trim() === "") {
-          return;
-        }
-        nombre = nombre.trim();
-        // Solicitar color
-        let color = prompt(
-          "Ingrese el color del evento (por ejemplo, #FF5733 o red):"
-        );
-        if (color === null || color.trim() === "") {
-          // Si no se ingresa color, se asigna un color por defecto
-          color = "#007BFF";
-        }
-        color = color.trim();
-        // Crear elemento del evento
-        const eventoDiv = document.createElement("div");
-        eventoDiv.classList.add("evento");
-        eventoDiv.style.backgroundColor = color;
-        eventoDiv.textContent = nombre;
-        // Limpiar contenido de la celda y agregar el evento
-        td.innerHTML = "";
-        td.appendChild(eventoDiv);
+        currentScheduleCell = td;
+        // Reiniciar valores del modal
+        if (scheduleNameInput) scheduleNameInput.value = "";
+        if (scheduleColorInput) scheduleColorInput.value = "#6366f1";
+        if (scheduleModal) scheduleModal.classList.remove("hidden");
       });
-      // Manejar doble clic para limpiar la celda
+      // Manejar doble clic para limpiar la celda y eliminar del almacenamiento
       td.addEventListener("dblclick", () => {
         td.innerHTML = "";
+        const day = td.dataset.day;
+        const slot = td.dataset.slot;
+        const key = `d${day}_s${slot}`;
+        delete scheduleData[key];
+        saveScheduleData();
       });
       fila.appendChild(td);
     });
@@ -94,6 +146,9 @@ document.addEventListener("DOMContentLoaded", () => {
   tabla.appendChild(tbody);
 
   horarioContainer.appendChild(tabla);
+
+  // Cargar datos guardados del horario (si existen)
+  loadScheduleData();
 
   /**
    * Manejo del menú de navegación
@@ -122,31 +177,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const materiasGrid = document.getElementById("materias-grid");
   const materiaInfo = document.getElementById("materia-info");
   if (materiasGrid) {
-    // Definir información de cada materia
-    const infoMaterias = {
-      "Materia 1":
-        "Contenido de ejemplo para la Materia 1. Aquí puedes colocar una descripción o detalles sobre la materia.",
-      "Materia 2":
-        "Contenido de ejemplo para la Materia 2. Aquí puedes colocar una descripción o detalles sobre la materia.",
-      "Materia 3":
-        "Contenido de ejemplo para la Materia 3. Aquí puedes colocar una descripción o detalles sobre la materia.",
-      "Materia 4":
-        "Contenido de ejemplo para la Materia 4. Aquí puedes colocar una descripción o detalles sobre la materia.",
-      "Materia 5":
-        "Contenido de ejemplo para la Materia 5. Aquí puedes colocar una descripción o detalles sobre la materia.",
-      "Materia 6":
-        "Contenido de ejemplo para la Materia 6. Aquí puedes colocar una descripción o detalles sobre la materia.",
-    };
-    // Crear 6 tarjetas
-    for (let i = 1; i <= 6; i++) {
-      const nombre = `Materia ${i}`;
+    // Definir los nombres y descripciones de cada materia
+    const materiasNombres = [
+      "Simulación de sistemas",
+      "Métodos numéricos",
+      "Física",
+      "Seminario I",
+      "Análisis y estructura de datos",
+      "Investigación de operaciones",
+    ];
+    const infoMaterias = {};
+    materiasNombres.forEach((nombre) => {
+      infoMaterias[nombre] = `Contenido de ejemplo para ${nombre}. Aquí puedes colocar una descripción o detalles sobre la materia.`;
+    });
+    // Crear tarjetas para cada materia
+    materiasNombres.forEach((nombre) => {
       const card = document.createElement("div");
       card.classList.add("materia-card");
       card.textContent = nombre;
       card.addEventListener("click", () => {
         // Al hacer clic, ocultar la cuadrícula de materias
         materiasGrid.classList.add("hidden");
-        // Mostrar información correspondiente con un botón para volver
         // Limpiar contenido previo
         materiaInfo.innerHTML = "";
         const volverBtn = document.createElement("button");
@@ -166,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         materiaInfo.classList.remove("hidden");
       });
       materiasGrid.appendChild(card);
-    }
+    });
   }
 
   // Mostrar solo la sección de horario por defecto
@@ -204,12 +255,23 @@ document.addEventListener("DOMContentLoaded", () => {
       savedData = { date: currentDate, states: Array(numItems).fill(false) };
       localStorage.setItem("checklistData", JSON.stringify(savedData));
     }
-    // Crear elementos del checklist
+    // Nombres personalizados para cada tarea
+    const taskNames = [
+      "NEW",
+      "NEW",
+      "NEW B",
+      "BLUE",
+      "BLUE",
+      "BLUE B",
+      "WHITE",
+    ];
+    // Crear elementos del checklist con nombres personalizados
     for (let i = 0; i < numItems; i++) {
       const li = document.createElement("li");
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.id = `check-${i}`;
+      // Utilizar el estado guardado si existe
       checkbox.checked = savedData.states && savedData.states[i];
       checkbox.addEventListener("change", () => {
         savedData.states[i] = checkbox.checked;
@@ -218,7 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       const label = document.createElement("label");
       label.htmlFor = checkbox.id;
-      label.textContent = `Tarea ${i + 1}`;
+      // Usar nombre personalizado si existe, de lo contrario usar "Tarea X"
+      label.textContent = taskNames[i] || `Tarea ${i + 1}`;
       li.appendChild(checkbox);
       li.appendChild(label);
       checklistContainer.appendChild(li);
