@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const scheduleColorInput = document.getElementById("schedule-event-color");
   const scheduleSaveBtn = document.getElementById("schedule-save");
   const scheduleCloseBtn = document.getElementById("close-schedule-modal");
+  const scheduleDeleteBtn = document.getElementById("schedule-delete");
   let currentScheduleCell = null;
 
   if (scheduleSaveBtn) {
@@ -83,6 +84,21 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (scheduleCloseBtn) {
     scheduleCloseBtn.addEventListener("click", () => {
+      scheduleModal.classList.add("hidden");
+    });
+  }
+
+  // Permitir eliminar la materia desde el modal
+  if (scheduleDeleteBtn) {
+    scheduleDeleteBtn.addEventListener("click", () => {
+      if (!currentScheduleCell) return;
+      const day = currentScheduleCell.dataset.day;
+      const slot = currentScheduleCell.dataset.slot;
+      const key = `d${day}_s${slot}`;
+      // Eliminar del almacenamiento y de la celda
+      delete scheduleData[key];
+      saveScheduleData();
+      currentScheduleCell.innerHTML = "";
       scheduleModal.classList.add("hidden");
     });
   }
@@ -126,8 +142,21 @@ document.addEventListener("DOMContentLoaded", () => {
       td.addEventListener("click", () => {
         currentScheduleCell = td;
         // Reiniciar valores del modal
-        if (scheduleNameInput) scheduleNameInput.value = "";
-        if (scheduleColorInput) scheduleColorInput.value = "#6366f1";
+        const day = td.dataset.day;
+        const slot = td.dataset.slot;
+        const key = `d${day}_s${slot}`;
+        const existing = scheduleData[key];
+        if (existing) {
+          // Si ya existe una materia en esta celda, precargar datos y mostrar botón eliminar
+          if (scheduleNameInput) scheduleNameInput.value = existing.title;
+          if (scheduleColorInput) scheduleColorInput.value = existing.color;
+          if (scheduleDeleteBtn) scheduleDeleteBtn.style.display = "inline-block";
+        } else {
+          // Si no hay materia, limpiar campos y ocultar botón eliminar
+          if (scheduleNameInput) scheduleNameInput.value = "";
+          if (scheduleColorInput) scheduleColorInput.value = "#6366f1";
+          if (scheduleDeleteBtn) scheduleDeleteBtn.style.display = "none";
+        }
         if (scheduleModal) scheduleModal.classList.remove("hidden");
       });
       // Manejar doble clic para limpiar la celda y eliminar del almacenamiento

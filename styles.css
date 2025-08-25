@@ -34,10 +34,24 @@ header{
   background: var(--nav-bg);
   border-bottom: 1px solid var(--nav-border);
   position: sticky; top: 0; z-index: 10;
+  /* Centrar el contenido, en particular el título */
+  text-align: center;
 }
 header h1{
-  margin:0; padding: 1rem 0;
-  text-align:center; font-weight:700; letter-spacing:.3px;
+  /* Centrar el título horizontalmente */
+  margin: 0.5rem auto;
+  padding: 0.6rem 1rem;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: .3px;
+  /* Mostrar el título como una etiqueta con fondo degradado animado */
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(90deg, #6366f1, #14b8a6, #a855f7, #06b6d4, #6366f1);
+  background-size: 300% 300%;
+  animation: dandel-bg 8s ease infinite;
 }
 footer{
   background: var(--nav-bg);
@@ -159,6 +173,32 @@ table.horario td.selectable:hover{background:#f8fafc}
   main{max-width: 1400px}
 }
 
+/* Animación para el gradiente en el título "Dandel" */
+@keyframes dandel-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animación para el fondo degradado de la etiqueta "Dandel" */
+@keyframes dandel-bg {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 /* ===== Modales ===== */
 /* Estilos genéricos para los modales usados en horario y calendario */
 .modal {
@@ -241,4 +281,19 @@ table.horario td.selectable:hover{background:#f8fafc}
   height: 0.8rem;
   border-radius: 3px;
   margin-right: 0.5rem;
+}
+
+/* Botón específico para eliminar en el modal del horario */
+.btn-delete {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: filter 0.2s;
+}
+.btn-delete:hover {
+  filter: brightness(0.9);
 }
