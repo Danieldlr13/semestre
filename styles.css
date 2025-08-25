@@ -18,22 +18,6 @@
   --table-cell:   #ffffff;
 }
 
-/* ===== Tema oscuro (cambia solo variables) ===== */
-:root[data-theme="dark"]{
-  --bg: #0b1020;
-  --text: #e5e7eb;
-  --muted: #9aa4b2;
-  --card: #0f162d;
-  --border: rgba(255,255,255,0.08);
-
-  --nav-bg: #0f162d;
-  --nav-border: rgba(255,255,255,0.08);
-  --nav-hover: rgba(255,255,255,0.06);
-
-  --table-header: #101a36;
-  --table-cell:   #0f162d;
-}
-
 /* ===== Reset mínimo / tipografía ===== */
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -52,7 +36,7 @@ header{
   position: sticky; top: 0; z-index: 10;
 }
 header h1{
-  margin:0; padding: .9rem 0;
+  margin:0; padding: 1rem 0;
   text-align:center; font-weight:700; letter-spacing:.3px;
 }
 footer{
@@ -60,25 +44,6 @@ footer{
   border-top: 1px solid var(--nav-border);
   color: var(--muted);
   text-align:center; padding: 1rem 0;
-}
-
-/* Acciones en el header (botón tema + color acento) */
-.header-actions{
-  display:flex; gap:.5rem; justify-content:center; padding-bottom:.5rem;
-}
-#theme-toggle{
-  border:1px solid var(--nav-border);
-  background: var(--nav-bg);
-  color: var(--text);
-  border-radius: 999px;
-  padding:.4rem .7rem;
-  cursor:pointer;
-}
-#theme-toggle:hover{ background: var(--nav-hover); }
-.accent-picker input[type="color"]{
-  appearance: none; -webkit-appearance: none; border:none; padding:0; width:36px; height:36px;
-  border-radius:50%; overflow:hidden; cursor:pointer; background: transparent;
-  box-shadow: 0 0 0 1px var(--nav-border) inset;
 }
 
 /* ===== Nav (tabs) ===== */
@@ -105,7 +70,6 @@ section{
   padding: 1.25rem; margin-top: 1.25rem; box-shadow: 0 6px 24px rgba(2,6,23,.06);
 }
 h2{margin:.25rem 0 1rem; font-weight:700}
-.hidden{display:none !important}
 
 /* ===== Materias ===== */
 .materias-grid{
@@ -128,6 +92,7 @@ h2{margin:.25rem 0 1rem; font-weight:700}
   border-radius: 999px; cursor:pointer; transition:.2s ease
 }
 .materia-info .btn-volver:hover{filter:brightness(.95)}
+.hidden{display:none !important}
 
 /* ===== Checklist ===== */
 .checklist{list-style:none; padding:0; margin:1rem 0}
@@ -162,7 +127,7 @@ table.horario td.selectable:hover{background:#f8fafc}
 }
 .calendar-toolbar button{
   background:#f8fafc; color: var(--text); border:1px solid var(--border);
-  padding:.5rem .8rem; border-radius:10px; cursor:pointer; transition:.15s ease; margin:0 .25rem;
+  padding:.5rem .8rem; border-radius:10px; cursor:pointer; transition:.15s ease
 }
 .calendar-toolbar button:hover{background:#eef2ff}
 #calendar-title{font-weight:700}
@@ -184,52 +149,9 @@ table.horario td.selectable:hover{background:#f8fafc}
 }
 .day-events span{font-size:.7rem; color:#6b7280}
 
-/* ===== Modal (calendario) ===== */
-.modal{
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,.5);
-  display: flex; align-items: center; justify-content: center;
-}
-.modal-content{
-  background: var(--card);
-  color: var(--text);
-  padding: 1rem;
-  border-radius: 12px;
-  width: 340px;
-  max-height: 90%;
-  overflow-y: auto;
-  border:1px solid var(--border);
-  box-shadow: 0 10px 30px rgba(2,6,23,.25);
-}
-.modal-header{display:flex; align-items:center; justify-content:space-between; gap:.5rem}
-.modal-close{
-  background: transparent; border:1px solid var(--border); border-radius:8px;
-  font-size:1rem; cursor:pointer; padding:.1rem .45rem; color: var(--muted)
-}
-.modal-close:hover{background: var(--nav-hover)}
-.modal-body input, .modal-body textarea{
-  width:100%; margin:.4rem 0; padding:.55rem .65rem; border-radius:10px;
-  border:1px solid var(--border); background: var(--table-cell); color: var(--text);
-  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-}
-#save-event{
-  background: var(--tab-active-grad); color:#fff; border:none; border-radius:10px;
-  padding:.55rem 1rem; cursor:pointer; transition:.15s ease; display:inline-block; margin-top:.25rem;
-}
-#save-event:hover{filter:brightness(.95)}
-#event-list{padding-left:1rem}
-#event-list button{
-  background: transparent; border:none; color: var(--primary);
-  cursor:pointer; font-weight:700;
-}
-#event-list button:hover{color: var(--accent)}
-.event-color-box{
-  display:inline-block; width:.8rem; height:.8rem; margin-right:.3rem; vertical-align:middle; border-radius:3px;
-}
-
 /* ===== Responsivo ===== */
 @media (max-width: 768px){
-  header h1{font-size:1.2rem}
+  header h1{font-size:1.25rem}
   nav#menu li{flex:1 1 48%; text-align:center}
   .day{min-height:84px}
 }
