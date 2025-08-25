@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Horario Semanal</title>
+
+    <!-- Fuente moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Mi Horario Semanal</h1>
+      <!-- Menú de navegación horizontal -->
+      <nav id="menu">
+        <ul>
+          <li class="nav-item active" data-target="seccion-horario">Horario</li>
+          <li class="nav-item" data-target="seccion-materias">Materias</li>
+          <li class="nav-item" data-target="seccion-3">Sección 3</li>
+          <li class="nav-item" data-target="seccion-4">Calendario</li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Sección 1: Horario -->
+      <section id="seccion-horario">
+        <h2>Horario de Lunes a Domingo</h2>
+        <div id="horario-container"></div>
+      </section>
+
+      <!-- Sección 2: Materias -->
+      <section id="seccion-materias" class="hidden">
+        <h2>Materias</h2>
+        <div id="materias-grid" class="materias-grid"></div>
+        <div id="materia-info" class="materia-info hidden"></div>
+      </section>
+
+      <!-- Sección 3: Checklist diario -->
+      <section id="seccion-3" class="hidden">
+        <h2>Check list diario</h2>
+        <p>Marca cada casilla todos los días. Las casillas se reinician automáticamente cada día (zona horaria Colombia).</p>
+        <ul id="checklist" class="checklist"></ul>
+      </section>
+
+      <!-- Sección 4: Calendario -->
+      <section id="seccion-4" class="hidden">
+        <h2>Calendario</h2>
+        <div class="calendar-toolbar">
+          <button id="prev-month" aria-label="Mes anterior">‹</button>
+          <div id="calendar-title">Mes Año</div>
+          <button id="next-month" aria-label="Mes siguiente">›</button>
+          <button id="today-btn">Hoy</button>
+        </div>
+
+        <div id="calendar-days" class="calendar-grid"></div>
+
+        <!-- Modal -->
+        <div id="calendar-modal" class="modal hidden" role="dialog" aria-modal="true">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 id="modal-date-title">Fecha</h3>
+              <button id="close-modal" class="modal-close" aria-label="Cerrar">×</button>
+            </div>
+            <div class="modal-body">
+              <input type="text" id="event-name" placeholder="Título del evento" />
+              <textarea id="event-notes" placeholder="Notas (opcional)"></textarea>
+              <label>Color: <input type="color" id="event-color" value="#007bff" /></label>
+              <button id="save-event">Guardar</button>
+              <hr />
+              <h4>Eventos del día</h4>
+              <ul id="event-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2025 Mi Sitio Web</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
