@@ -87,16 +87,86 @@ h2{margin:.25rem 0 1rem; font-weight:700}
 
 /* ===== Materias ===== */
 .materias-grid{
-  display:grid; gap:1rem;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display:grid; gap:1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-.materia-card{
-  background: #fbfbfe;
-  border:1px solid var(--border);
-  border-radius: 12px; padding: 1.25rem; text-align:center; font-weight:700;
-  color: var(--text); cursor:pointer; transition:.2s ease;
+.materia-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  color: var(--text);
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
-.materia-card:hover{transform: translateY(-2px); box-shadow:0 10px 22px rgba(2,6,23,.08)}
+
+.materia-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(2,6,23,.08);
+}
+
+.materia-card h3 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.materia-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.materia-card .recursos {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.materia-card .recursos a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.materia-card .recursos img {
+  height: 40px;
+  width: auto;
+  border-radius: 4px;
+  transition: transform 0.2s;
+  object-fit: contain;
+  background: white;
+}
+
+.materia-card .recursos img:hover {
+  transform: scale(1.1);
+}
+
+.materia-card .ubicacion {
+  color: var(--muted);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.materia-card .modalidad {
+  color: var(--primary);
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--nav-hover);
+  border-radius: 999px;
+  width: fit-content;
+}
 .materia-info{
   margin-top:1rem; padding:1rem; border-radius:12px;
   background:#fafbff; border:1px dashed var(--border); color: var(--muted)

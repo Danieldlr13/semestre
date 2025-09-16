@@ -206,24 +206,171 @@ document.addEventListener("DOMContentLoaded", () => {
   const materiasGrid = document.getElementById("materias-grid");
   const materiaInfo = document.getElementById("materia-info");
   if (materiasGrid) {
-    // Definir los nombres y descripciones de cada materia
-    const materiasNombres = [
-      "Simulación de sistemas",
-      "Métodos numéricos",
-      "Física",
-      "Seminario I",
-      "Análisis y estructura de datos",
-      "Investigación de operaciones",
+    // Definir los nombres, enlaces y descripciones de cada materia
+    const materias = [
+      {
+        nombre: "Análisis y diseño de algoritmos",
+        enlace: "requisitos.html",
+        descripcion: "Diseño y análisis de algoritmos eficientes",
+        recursos: [
+          {
+            nombre: "Codeforces",
+            url: "https://codeforces.com/group/CYnnVCqhhY/blog",
+            imagen: "https://codeforces.org/s/94265/images/codeforces-sponsored-by-ton.png"
+          }
+        ]
+      },
+      {
+        nombre: "Fundamentos de Analítica",
+        enlace: "bases.html",
+        descripcion: "Base de datos",
+        modalidad: "Remota",
+        recursos: [
+          {
+            nombre: "Teams",
+            url: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_YWQzNjZlMzAtNzg2Mi00MjI4LTliZDMtMTUyYTNiYjEzM2Jl%40thread.v2/0?context=%7b%22Tid%22%3a%22a2ba4345-7764-4d22-b6a1-7cf528f3b3a5%22%2c%22Oid%22%3a%220f49a14f-710b-4c1b-bd97-0f26ea2ff237%22%7d",
+            imagen: "https://i.ibb.co/C5mnftz0/44e883e2-1033-4692-ad73-0ef85650830e.png"
+          }
+        ]
+      },
+      {
+        nombre: "Desarrollo Web",
+        enlace: "redes.html",
+        descripcion: "Developer web",
+        modalidad: "Virtual",
+        recursos: [
+          {
+            nombre: "Drive",
+            url: "https://drive.google.com/drive/folders/1atUDBQLtuZ2_1MXWPyTqnq8SboqkJWGL",
+            imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM9KyekrojmUYDthegoNmCwmVulMH-8afqtg&s"
+          },
+          {
+            nombre: "Minas LAP",
+            url: "https://minaslap.net/course/view.php?id=214",
+            imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EQJKUJu-BaGqzgVixlu1S9_h1xmO0j9YxA&s"
+          }
+        ]
+      },
+      {
+        nombre: "Seminario I",
+        enlace: "optimizacion.html",
+        descripcion: "Seminario",
+        ubicacion: "04-203",
+        recursos: [
+          {
+            nombre: "Drive",
+            url: "https://drive.google.com/drive/folders/1xiBj7QscfJzPv66kvBuUJh1xIzZObrOK?usp=drive_link",
+            imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM9KyekrojmUYDthegoNmCwmVulMH-8afqtg&s"
+          }
+        ]
+      },
+      {
+        nombre: "Métodos numéricos",
+        enlace: "metodos.html",
+        descripcion: "Métodos numéricos",
+        ubicacion: "12-102",
+        recursos: [
+          {
+            nombre: "Unvirtual",
+            url: "https://unvirtual.medellin.unal.edu.co/course/view.php?id=1730",
+            imagen: "https://unvirtual.medellin.unal.edu.co/pluginfile.php/1/core_admin/logocompact/300x300/1754335242/PNG_LOGOSIMBOLO%20LATERAL%20%202%20COLORES-02.png"
+          }
+        ]
+      },
+      {
+        nombre: "Simulación de sistemas",
+        enlace: "simulacion.html",
+        descripcion: "Simulación de sistemas",
+        ubicacion: "12-204 / M7 502-B",
+        recursos: [
+          {
+            nombre: "Unvirtual",
+            url: "https://unvirtual.medellin.unal.edu.co/course/view.php?id=1866",
+            imagen: "https://unvirtual.medellin.unal.edu.co/pluginfile.php/1/core_admin/logocompact/300x300/1754335242/PNG_LOGOSIMBOLO%20LATERAL%20%202%20COLORES-02.png"
+          }
+        ]
+      },
+      {
+        nombre: "Física I",
+        enlace: "apun.html",
+        descripcion: "Física I",
+        recursos: [
+          {
+            nombre: "Unvirtual",
+            url: "https://unvirtual.medellin.unal.edu.co/course/view.php?id=2102",
+            imagen: "https://unvirtual.medellin.unal.edu.co/pluginfile.php/1/core_admin/logocompact/300x300/1754335242/PNG_LOGOSIMBOLO%20LATERAL%20%202%20COLORES-02.png"
+          }
+        ]
+      }
     ];
-    const infoMaterias = {};
-    materiasNombres.forEach((nombre) => {
-      infoMaterias[nombre] = `Contenido de ejemplo para ${nombre}. Aquí puedes colocar una descripción o detalles sobre la materia.`;
-    });
     // Crear tarjetas para cada materia
-    materiasNombres.forEach((nombre) => {
+    materias.forEach((materia) => {
       const card = document.createElement("div");
       card.classList.add("materia-card");
-      card.textContent = nombre;
+      
+      // Crear el título de la materia
+      const titulo = document.createElement("h3");
+      titulo.textContent = materia.nombre;
+      card.appendChild(titulo);
+
+      // Agregar descripción si existe
+      if (materia.descripcion) {
+        const desc = document.createElement("p");
+        desc.textContent = materia.descripcion;
+        card.appendChild(desc);
+      }
+
+      // Agregar ubicación si existe
+      if (materia.ubicacion) {
+        const ubicacion = document.createElement("p");
+        ubicacion.className = "ubicacion";
+        ubicacion.textContent = `Lugar: ${materia.ubicacion}`;
+        card.appendChild(ubicacion);
+      }
+
+      // Agregar modalidad si existe
+      if (materia.modalidad) {
+        const modalidad = document.createElement("p");
+        modalidad.className = "modalidad";
+        modalidad.textContent = materia.modalidad;
+        card.appendChild(modalidad);
+      }
+
+      // Agregar recursos si existen
+      if (materia.recursos && materia.recursos.length > 0) {
+        const recursosContainer = document.createElement("div");
+        recursosContainer.className = "recursos";
+        
+        materia.recursos.forEach(recurso => {
+          const link = document.createElement("a");
+          link.href = recurso.url;
+          link.target = "_blank";
+          // Prevenir que el clic en el enlace oculte la sección de materias
+          link.onclick = function(e) {
+            e.stopPropagation(); // Evitar que el evento llegue al contenedor padre
+          };
+          
+          if (recurso.imagen) {
+            const img = document.createElement("img");
+            img.src = recurso.imagen;
+            img.alt = recurso.nombre;
+            img.title = recurso.nombre;
+            link.appendChild(img);
+          } else {
+            link.textContent = recurso.nombre;
+          }
+          
+          recursosContainer.appendChild(link);
+        });
+        
+        card.appendChild(recursosContainer);
+      }
+      
+      // Quitar cualquier evento de clic que pueda ocultar la sección
+      card.onclick = function(e) {
+        e.preventDefault(); // Prevenir comportamiento por defecto
+        e.stopPropagation(); // Evitar propagación del evento
+      };
       card.addEventListener("click", () => {
         // Al hacer clic, ocultar la cuadrícula de materias
         materiasGrid.classList.add("hidden");
