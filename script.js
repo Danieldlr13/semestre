@@ -227,9 +227,9 @@ document.addEventListener("DOMContentLoaded", () => {
         modalidad: "Remota",
         recursos: [
           {
-            nombre: "Teams",
-            url: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_YWQzNjZlMzAtNzg2Mi00MjI4LTliZDMtMTUyYTNiYjEzM2Jl%40thread.v2/0?context=%7b%22Tid%22%3a%22a2ba4345-7764-4d22-b6a1-7cf528f3b3a5%22%2c%22Oid%22%3a%220f49a14f-710b-4c1b-bd97-0f26ea2ff237%22%7d",
-            imagen: "https://i.ibb.co/C5mnftz0/44e883e2-1033-4692-ad73-0ef85650830e.png"
+            nombre: "Curso",
+            url: "https://jdvelasq.github.io/courses/",
+            imagen: "https://tse2.mm.bing.net/th/id/OIP.AzPZfHoYTa0d8GXaTghSxQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
           }
         ]
       },
